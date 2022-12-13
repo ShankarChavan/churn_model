@@ -60,7 +60,7 @@ Install dvc package if not installed already.This will be used for tracking data
 
 For more details about dvc refer to [this link](https://dvc.org/doc)
 
-Ensure that `/data/` folder in .gitignore file is commented before running `dvc init and dvc add` 
+Ensure that `/data/` folder in .gitignore file is commented before running `dvc init and dvc add` commands. 
 
 ```bash
 pip install dvc
@@ -70,7 +70,12 @@ dvc add data/external/churn_data.csv
 git add data/external/.gitignore data/external/churn_data.csv.dvc
 
 ```
+Lastly commit the recent changes to git till step 5.
 
+```bash
+git add . && git commit -m "update Readme.md and added dvc"
+git push origin main
+```
 
 
 
