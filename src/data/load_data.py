@@ -10,7 +10,7 @@ def read_params(config_path):
     output: paramters as dictionary
     """
 
-    with open(cionfig_path) as yaml_file:
+    with open(config_path) as yaml_file:
         config=yaml.safe_load(yaml_file)
     return config
 
@@ -40,8 +40,8 @@ def load_raw_data(config_path):
     df=load_data(external_data_path,selected_feat)
     df.to_csv(raw_data_path,index=False)
 
-if __name__='__main__':
-    args = argparse.Argumentparser()
+if __name__=='__main__':
+    args = argparse.ArgumentParser()
     args.add_argument("--config",default="params.yaml")
     parsed_args=args.parse_args()
     load_raw_data(config_path=parsed_args.config)
