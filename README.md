@@ -3,7 +3,7 @@ churn_model
 
 mlops end to end lifecycle
 
-# Step 1:
+# Step 1: Create project-specific conda env
 
 create env
 
@@ -16,7 +16,7 @@ activate env
 ```bash
 conda activate churn_env
 ```
-# Step 2:
+# Step 2: Use Cookiecutter DS template
 create DS project scaffolding run below command
 ```bash
 pip install cookiecutter
@@ -26,7 +26,7 @@ cookiecutter https://github.com/drivendata/cookiecutter-data-science
 
 cd churn_model
 ```
-# Step 3:
+# Step 3: Add first commit to github
 Setup the git repo and initialize same locally, if running project locally instead of using CodeSpaces.
 
 Run the below command after setting up remote git repository
@@ -36,13 +36,13 @@ git init
 git add .
 git commit -m "first commit with cookiecutter"
 git branch -M main
-git remote add origin https://github.com/ShankarChavan/churn_model.git
+git remote add origin <your github remote repo name>
 git push -u origin main
 ```
 In case running locally then if error comes for email and user.name please setup the same. 
 
 
-# Step 4:
+# Step 4: Download data
 
 
 Download the training data from kaggle [link](https://www.kaggle.com/c/customer-churn-prediction-2020/data?select=train.csv) Or from [gdrive link](https://drive.google.com/file/d/1AgAnGFxj0TVfoD9tC4kAv0XPzFUB3mnd/view?usp=share_link) and put it in the *external folder* inside the data folder.
@@ -55,7 +55,7 @@ Download the training data from kaggle [link](https://www.kaggle.com/c/customer-
 
 **Processed**: Processed files using the raw files
 
-# Step 5:
+# Step 5: DVC install 
 Install dvc package if not installed already.This will be used for tracking data and versioning it.
 
 For more details about dvc refer to [this link](https://dvc.org/doc)
@@ -76,6 +76,43 @@ Lastly commit the recent changes to git till step 5.
 git add . && git commit -m "update Readme.md and added dvc"
 git push origin main
 ```
+# Step6: Create the source code inside the src folder
+
+All project related scripts will be written inside the src folder.
+There are 4 folders within `src` folder namely: 
+- data (data related scripts e.g. load_data.py,split_data.py etc.)
+- features (features engineering related scripts e.g. data_processing.py, feature_engineer.py etc. )
+- models (model related scripts e.g. train.py, prod_model_selection.py etc.) 
+- visualizations(e.g. reports.py)
+
+## Step 6.1 Create params.yaml config file
+We will start with `params.yaml`. This file will hold all the project related configurations.
+
+```bash
+touch params.yaml
+```
+*tip:* on windows cmd prompt you can try this -> `copy nul "params.yaml"` which works same as *touch* in bash.
+
+Update the `params.yaml` with all project related config.
+
+## Step 6.2 Create `load.py` file
+
+Within the `src/data` folder create load_data.py file.
+
+```bash
+touch src/data/load_data.py
+```
+
+write code to read configuration and load data from external sources to raw folder.
+
+After updating `load_data.py` file,commit and push code changes.
+
+```bash
+git add . && git commit -m "update params.yaml and load_data.py"
+
+git push origin main
+```
+
 
 
 
