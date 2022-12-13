@@ -76,7 +76,7 @@ Lastly commit the recent changes to git till step 5.
 git add . && git commit -m "update Readme.md and added dvc"
 git push origin main
 ```
-# Step6: Create the source code inside the src folder
+# Step 6: Create the source code inside the src folder
 
 All project related scripts will be written inside the src folder.
 There are 4 folders within `src` folder namely: 
@@ -103,7 +103,11 @@ Within the `src/data` folder create load_data.py file.
 touch src/data/load_data.py
 ```
 
-write code to read configuration and load data from external sources to raw folder.
+Write code to read configuration and load data from external sources to raw folder.
+Add methods :
+    - read_params
+    - load_data
+    - load_raw_data
 
 After updating `load_data.py` file,commit and push code changes.
 
@@ -113,7 +117,31 @@ git add . && git commit -m "update params.yaml and load_data.py"
 git push origin main
 ```
 
+## Step 6.3: Add `dvc.yaml` file
 
+Create `dvc.yaml` file in the root directory of the project.
+
+This will be the important file for setting up the ML-pipeline in stages. 
+
+```bash
+touch dvc.yaml
+```
+Add or modify stage-1 `load_data` config lines in the `dvc.yaml` file.
+
+After updating `dvc.yaml` Run the below command to see the DAG in terminal window
+```bash
+dvc dag
+``` 
+
+Run the `dvc repro` command on the shell window to execute the load_data.py and new file `dvc.lock` will be created in the root.
+
+Finally do the git commit & push stage-1
+
+```bash
+git add . && git commit -m "added stage-1"
+
+git push origin main
+```
 
 
 Project Organization

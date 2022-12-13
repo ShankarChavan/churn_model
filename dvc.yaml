@@ -1,0 +1,8 @@
+stages:
+  load_data:
+    cmd: python src/data/load_data.py --config=params.yaml
+    deps:
+    - src/data/load_data.py
+    - data/external/churn_data.csv
+    outs:
+    - data/raw/churn_data.csv
