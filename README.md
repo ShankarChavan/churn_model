@@ -27,7 +27,7 @@ cookiecutter https://github.com/drivendata/cookiecutter-data-science
 cd churn_model
 ```
 # Step 3:
-Setup the git repo and initialize same locally.
+Setup the git repo and initialize same locally, if running project locally instead of using CodeSpaces.
 
 Run the below command after setting up remote git repository
 
@@ -39,6 +39,39 @@ git branch -M main
 git remote add origin https://github.com/ShankarChavan/churn_model.git
 git push -u origin main
 ```
+In case running locally then if error comes for email and user.name please setup the same. 
+
+
+# Step 4:
+
+
+Download the training data from kaggle [link](https://www.kaggle.com/c/customer-churn-prediction-2020/data?select=train.csv) Or from [gdrive link](https://drive.google.com/file/d/1AgAnGFxj0TVfoD9tC4kAv0XPzFUB3mnd/view?usp=share_link) and put it in the *external folder* inside the data folder.
+
+ There are 4 folders inside the data main folder. We will be only using external, raw, and processed folders in this project.
+
+**external**: External files (ex. train.csv or churn_data.csv from Kaggle or gdrive)
+
+**raw**: Raw data for this project
+
+**Processed**: Processed files using the raw files
+
+# Step 5:
+Install dvc package if not installed already.This will be used for tracking data and versioning it.
+
+For more details about dvc refer to [this link](https://dvc.org/doc)
+
+Ensure that `/data/` folder in .gitignore file is commented before running `dvc init and dvc add` 
+
+```bash
+pip install dvc
+dvc init 
+dvc add data/external/churn_data.csv
+
+git add data/external/.gitignore data/external/churn_data.csv.dvc
+
+```
+
+
 
 
 Project Organization
