@@ -12,8 +12,7 @@ pandas
 pytest
 tox
 flake8
-flask
 gunicorn
 PyYAML
-flake8
+mlflow
 python-dotenv>=0.5.1

@@ -157,12 +157,62 @@ touch src/data/split_data.py
 ```
 Add code for splitting data and save it to disc.
 
-Add stage-2(split-data) of split_data in dvc.yaml file and run `dvc repro` command
+Add stage-2(split-data) of split_data.py in dvc.yaml file and run `dvc repro` command
 
-git add,commit and push changes to main branch
+git add,commit and push stage-2 changes to main branch
 
 ```bash
 git add . && git commit -m "stage-2 completed"
+git push origin main
+```
+
+## Step 6.5 Add train_model and select best-model from mlflow experiment tracker
+
+First ensure that **mlflow** is already installed in environment.
+
+We will be adding the **train_model.py** code and **production_selection.py** code to train model 
+and select the best model.
+
+*train_model.py* is already created as a part of scaffolding.we need to create the 
+*production_model_selection.py* in the `src/models` folder
+
+```bash
+touch src/models/production_model_selection.py
+```
+Write code for both python files.
+
+Once added next we need to update the `dvc.yaml` file for both train_model and select production model.
+
+Post this we need to start the mlflow server and run the `dvc repro` in the terminal
+
+MLflow needs two resources to work nicely
+- Storage disk or Blob storage or s3 storage location (for storing artifacts like model file,plot files etc.)
+- sql db(e.g. sqlite, postgresql, mysql etc) for storing the metrics 
+
+```bash
+mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 -p 1234
+```
+
+Above command will open new popup browser for mlflow-server. 
+
+We are storing metrics in local sqlite db and local artifacts folder.
+
+Run the complete pipeline and check the dvc.lock and models folder.
+
+```bash
+dvc repro
+```
+modify the `max_depth` parameter to `7` in the `params.yaml` and re-run the `dvc repro`
+
+Models will be versioned and moved from staging to production stage based on best accuracy metrics.
+
+`dvc.lock` file should be updated and models folder should have a new `model.joblib` file within it.
+
+Once completed above steps push changes to git
+
+```bash
+git add . && git commit -m "stage-3 completed and model file generated"
+
 git push origin main
 ```
 
