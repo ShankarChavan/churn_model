@@ -44,8 +44,16 @@ In case running locally then if error comes for email and user.name please setup
 
 # Step 4: Download data
 
+Download the training data from kaggle [link](https://www.kaggle.com/c/customer-churn-prediction-2020/data?select=train.csv) and put it in the *external folder* inside the data folder.
 
-Download the training data from kaggle [link](https://www.kaggle.com/c/customer-churn-prediction-2020/data?select=train.csv) Or from [gdrive link](https://drive.google.com/file/d/1AgAnGFxj0TVfoD9tC4kAv0XPzFUB3mnd/view?usp=share_link) and put it in the *external folder* inside the data folder.
+Or use the below **bash command** to directly download in the external folder 
+
+```bash
+curl -L "https://drive.google.com/uc?export=download&id=1AgAnGFxj0TVfoD9tC4kAv0XPzFUB3mnd" --output data/external/churn_data.csv
+```
+
+
+
 
  There are 4 folders inside the data main folder. We will be only using external, raw, and processed folders in this project.
 
@@ -142,6 +150,18 @@ git add . && git commit -m "added stage-1"
 
 git push origin main
 ```
+## Add `split_data.py` and `stage-2` in dvc.yaml
+
+```bash
+touch src/data/split_data.py
+```
+Add code for splitting data and save it to disc.
+
+Add stage-2(split-data) of split_data in dvc.yaml file and run `dvc repro` command
+
+git add,commit and push changes to main branch
+
+
 
 
 Project Organization
