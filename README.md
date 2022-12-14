@@ -150,7 +150,7 @@ git add . && git commit -m "added stage-1"
 
 git push origin main
 ```
-## Add `split_data.py` and `stage-2` in dvc.yaml
+## Step 6.4 Add `split_data.py` and `stage-2` in dvc.yaml
 
 ```bash
 touch src/data/split_data.py
@@ -160,6 +160,11 @@ Add code for splitting data and save it to disc.
 Add stage-2(split-data) of split_data in dvc.yaml file and run `dvc repro` command
 
 git add,commit and push changes to main branch
+
+```bash
+git add . && git commit -m "stage-2 completed"
+git push origin main
+```
 
 
 
