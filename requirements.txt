@@ -15,4 +15,5 @@ flake8
 gunicorn
 PyYAML
 mlflow
+evidently
 python-dotenv>=0.5.1

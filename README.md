@@ -216,6 +216,15 @@ git add . && git commit -m "stage-3 completed and model file generated"
 git push origin main
 ```
 
+# 7. Unit tests
+
+We will be using **pytest** for our unit testing module, create the tests folder within the main folder and add `__init__.py`.
+
+```bash
+mkdir tests
+touch tests/__init__.py
+
+```
 
 
 
