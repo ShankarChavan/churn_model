@@ -40,6 +40,7 @@ def log_production_model(config_path):
 
     loaded_model = mlflow.pyfunc.load_model(logged_model)
     joblib.dump(loaded_model, model_dir)
+    
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser()

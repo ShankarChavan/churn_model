@@ -26,9 +26,11 @@ stages:
     - path: data/processed/churn_test.csv
       md5: c3a4965f71511e72d4af9ac650f47505
       size: 23358
+      isexec: true
     - path: data/processed/churn_train.csv
       md5: 8358e3ab11f8301c58d3b0e5aa99a6fd
       size: 92916
+      isexec: true
   model_train:
     cmd: python src/models/train_model.py --config=params.yaml
     deps:
@@ -39,23 +41,24 @@ stages:
       md5: 8358e3ab11f8301c58d3b0e5aa99a6fd
       size: 92916
     - path: src/models/train_model.py
-      md5: 36402e86e4c25056dfbda6610c8ca0ac
-      size: 3976
+      md5: 794c0880950ec2f2f3215ee153a9c3d4
+      size: 3983
     params:
       params.yaml:
-        random_forest.max_depth: 7
+        random_forest.max_depth: 5
         random_forest.n_estimators: 30
   log_production_model:
     cmd: python src/models/production_model_selection.py --config=params.yaml
     deps:
     - path: src/models/production_model_selection.py
-      md5: 2e46c890a95f24ac8a9567393728106c
-      size: 1674
+      md5: 674fec81ede561fd63864e40cb7ff42a
+      size: 1679
     params:
       params.yaml:
-        random_forest.max_depth: 7
+        random_forest.max_depth: 5
         random_forest.n_estimators: 30
     outs:
     - path: models/model.joblib
-      md5: 2c2096e7bc7789927ec50ff02d316272
-      size: 273613
+      md5: 12933f810e28cfeec4a31012b67d9705
+      size: 120722
+      isexec: true

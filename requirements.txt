@@ -16,4 +16,6 @@ gunicorn
 PyYAML
 mlflow
 evidently
+pydantic
+fastapi
 python-dotenv>=0.5.1
