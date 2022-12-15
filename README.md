@@ -234,6 +234,10 @@ git push origin main
 ```
 
 # 7. Prediction Service via API
+
+```bash
+uvicorn predict:app --reload
+```
 # 8.
 # 9.
 # .... 

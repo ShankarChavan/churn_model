@@ -18,4 +18,6 @@ mlflow
 evidently
 pydantic
 fastapi
+uvicorn
+streamlit
 python-dotenv>=0.5.1
