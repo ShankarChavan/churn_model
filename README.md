@@ -8,7 +8,7 @@ mlops end to end lifecycle
 create env
 
 ```bash
-conda create -n  python=3.7 -y
+conda create -n churn_env python=3.7 -y
 ```
 
 activate env
