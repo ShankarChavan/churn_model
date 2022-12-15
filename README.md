@@ -84,6 +84,23 @@ Lastly commit the recent changes to git till step 5.
 git add . && git commit -m "update Readme.md and added dvc"
 git push origin main
 ```
+
+## Setup 5.1: Add current project to PYTHONPATH
+Below command will add path temporarily to the environment variables
+```bash
+export PYTHONPATH=/workspaces/churn_model:$PYTHONPATH
+```
+
+For permanently adding run the below command
+```bash
+vim ~/.bash_profile
+export PYTHONPATH=/workspaces/churn_model:$PYTHONPATH
+:w
+:q
+source ~/.bash_profile
+```
+
+
 # Step 6: Create the source code inside the src folder
 
 All project related scripts will be written inside the src folder.
@@ -216,8 +233,10 @@ git add . && git commit -m "stage-3 completed and model file generated"
 git push origin main
 ```
 
-# 7. Unit tests
-
+# 7. Prediction Service via API
+# 8.
+# 9.
+# .... 
 We will be using **pytest** for our unit testing module, create the tests folder within the main folder and add `__init__.py`.
 
 ```bash
@@ -225,7 +244,6 @@ mkdir tests
 touch tests/__init__.py
 
 ```
-
 
 
 Project Organization
@@ -278,5 +296,3 @@ Project Organization
 
 
 --------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
