@@ -235,10 +235,106 @@ git push origin main
 
 # 7. Prediction Service via API
 
+We will create a new folder `prediction_service`
+
+```bash
+
+mkdir prediction_service
+mkdir prediction_service/model_service_dir
+touch prediction_service/model_service_dir/.gitignore
+echo '/model.joblib'>>prediction_service/model_service_dir/.gitignore
+touch prediction_service/model_service_dir/.gitkeep
+
+mkdir app
+mkdir app/model_app_dir
+touch app/model_app_dir/.gitignore
+echo '/model.joblib'>>app/model_app_dir/.gitignore
+touch app/model_app_dir/.gitkeep
+
+```
+Ensure that `params.yaml` file is updated with model-directory path of api and webapp.
+
+
+```yaml
+model_service_dir: prediction_service/model_service_dir/model.joblib
+model_webapp_dir: app/model_app_dir/model.joblib
+```
+Also update the code in `src/models/production_model_selection.py` file to dump dynamically selected model from mlflow model registry into the above directory.This will automate the dumping process to different services and ensure model version consistency.
+
+We will use `FastAPI` for building api service and `pydantic` for validating the input data feilds.
+We will also need `uvicorn` package to initialize the api server. more details about the packages are below
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [pydantic](https://docs.pydantic.dev/)
+- [uvicorn](https://www.uvicorn.org/)
+
+update the `requirements.txt` with fastapi, pydantic and uvicorn and run the pip install.
+
+```bash
+- pydantic
+- fastapi
+- uvicorn
+pip install -r requirements.txt
+```
+
+Create `datamodel.py` to hold input datatype and validation range via api.
+```bash
+touch prediction_service/datamodel.py
+```
+
+But how do we get the valid range for our input data sources, head over to `EDA.ipynb` file in notebooks folder to understand how we can achieve that. 
+
+create `service_params.yaml` within the prediction_service folder
+
+```bash
+touch prediction_service/service_params.yaml
+```
+update the path for model and variables list in the yaml file.
+
+Add the `utils.py` to read and load the model file. 
+
+```touch
+touch prediction_service/utils.py
+```
+
+Add the `predict.py` responsible to generate the prediction for live input data coming via post request.  
+
+```touch
+touch prediction_service/predict.py
+```
+Once code is added to the above file run the below bash command to bring the api service up and running for test
+
 ```bash
 uvicorn predict:app --reload
 ```
-# 8.
+Below landing page will pop-up after running the above command
+
+![FastAPI api page](/assets/fastapi_loading_page.png "FastAPI docs")
+
+Click on the post dropdown and test the prediction-service using demo data.
+
+# 8. Use streamlit to quickly create prototype app
+
+Install streamlit package
+
+add streamlit to requirements.txt
+
+```bash
+- streamlit
+pip install -r requirements.txt
+```
+
+create app folder and add the relevant code into it.
+
+Run below bash command to bring up the app.
+
+```bash
+streamlit run app/app.py
+```
+
+URL link will appear with ip and port in terminal, click on it and page will appear on the browser.
+
+![streamlit page](/assets/streamlit_page.png "streamlit app")
+
 # 9.
 # .... 
 We will be using **pytest** for our unit testing module, create the tests folder within the main folder and add `__init__.py`.

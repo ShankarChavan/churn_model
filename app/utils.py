@@ -1,6 +1,6 @@
 import yaml
 import os
-
+import joblib
 
 def read_params(config_path='webapp_params.yaml'):
     """
@@ -13,3 +13,10 @@ def read_params(config_path='webapp_params.yaml'):
     with open(cwd+'/'+config_path) as yaml_file:
         config = yaml.safe_load(yaml_file)
     return config
+
+
+def load_model(config_path="webapp_params.yaml"):
+    config=read_params(config_path)
+    model=joblib.load(config["model_dir"])
+    features=config["model_var"]
+    return model,features

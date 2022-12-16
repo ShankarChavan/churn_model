@@ -3,17 +3,8 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 import streamlit as st
 import streamlit_pydantic as sp
-from utils import read_params
+from utils import load_model
 from datamodel import churnModelFeilds
-
-
-
-
-def load_model(config_path="webapp_params.yaml"):
-    config=read_params(config_path)
-    model=joblib.load(config["model_dir"])
-    features=config["model_var"]
-    return model,features
 
 def predict_churn(data):
     
@@ -25,7 +16,7 @@ def predict_churn(data):
     prediction = clf.predict(to_predict)
     return {'prediction':prediction[0]}
 
-st.write("# Churn model prediction Engine for telecom company -Yoda")
+st.header("Churn model prediction Engine")
 
 data = sp.pydantic_form(key="churn_predict_form", model=churnModelFeilds,submit_label='predict_churn')
 
