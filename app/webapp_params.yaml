@@ -1,3 +1,0 @@
-model_dir: /mnt/c/projects/mlops/churn_model_mlops_office/churn_model_mlops/app/model_app_dir/model.joblib
-
-model_var: ['number_vmail_messages','total_day_calls','total_eve_minutes','total_eve_charge','total_intl_minutes','number_customer_service_calls']
