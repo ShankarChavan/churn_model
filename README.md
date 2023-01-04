@@ -314,10 +314,77 @@ Click on the post dropdown and test the prediction-service using demo data.
 
 # 7.1 Critical step to update the model file
 
-We observed that `model.joblib` file created in the **step 6** will create a problem so git pull the latest code and rerun `dvc repro`.
+We observed that `model.joblib` file created in the **step 6** will create a problem because it will have dependency on mlflow class, so instead perform following 
 
-This will download the `model.pkl` file from artifacts folder of mlflow to the local models folder
+- use latest code from `production_model_selection.py`.
+- update `params.yaml` file for model.pkl instead of model.joblib
+- run `dvc repro` from root of the folder.
 
+This will download the `model.pkl` file from artifacts model folder of mlflow to the local models folder.
+
+# 8. Creating packages folder 
+Before moving ahead we will do the folder structure change.
+
+Because we want to keep all the packaging in one folder.It will also make it easy to create test folder for all the packages.
+
+So let's create a folder called `packages`, make sure you're at the root of the project
+
+```bash
+mkdir packages
+
+mkdir packages/churn_model
+mkdir packages/churn_model/churn_model
+mkdir packages/churn_model/tests
+
+mkdir packages/ml_api
+mkdir packages/ml_api/churn_api
+mkdir packages/ml_api/tests
+
+mkdir packages/ml_webapp
+mkdir packages/ml_webapp/app
+mkdir packages/ml_webapp/tests
+```
+Now we need to copy the prediction_service files and folder as it is in the packages folder and do the following:
+- copy all the files and folder in `packages/ml_api/churn_api/` from prediction_service
+- remove the service_params.yaml
+- add the `config.py` file
+- copy the `model.pkl` to `packages/ml_api/churn_api/model_service_dir/`  
+```bash
+cp -r prediction_service/* packages/ml_api/churn_api/
+rm -v packages/ml_api/churn_api/service_params.yaml
+touch packages/ml_api/churn_api/config.py
+cp models/model.pkl packages/ml_api/churn_api/model_service_dir/
+```
+In the `config.py` add the code for configuration of model_dir and model file.
+
+**Reason**: we added `config.py` instead of using `service_params.yaml` is that pytest module is unable to recognize or read the yaml files in subdirectories. 
+update the `utils.py` 
+
+run the fastapi service quickly
+
+```bash
+uvicorn predict:app --reload
+```
+After running the above command, Open this -> [localhost url](http://127.0.0.1:8000 )
+
+# 8.1 Create unit-tests for API endpoint
+
+create tests folder within `packages/ml_api/` and add `test_predict.py` & `__init__.py` files
+
+Also ensure to add the `pyproject.toml` file in the `ml_api` folder for the pytest to recognize the churn_api package
+
+```bash
+mkdir packages/ml_api/tests
+touch packages/ml_api/tests/test_predict.py
+touch packages/ml_api/tests/__init__.py
+touch packages/ml_api/pyproject.toml
+```
+Add the code to test the post and get method of the api.
+Also update the `pyproject.toml` file for configuring pytest.
+
+```bash
+python -m pytest packages/ml_api/
+```
 
 
 Project Organization
