@@ -386,6 +386,48 @@ Also update the `pyproject.toml` file for configuring pytest.
 python -m pytest packages/ml_api/
 ```
 
+Delete the `prediction_service` folder from project root path.
+
+# 8.2 Create the docker file for the api
+
+We will create the docker file in the ml_api folder.
+
+```bash
+touch packages/ml_api/Dockerfile
+touch packages/ml_api/.dockerignore
+```
+Add the docker file related commands in the **Dockerfile**. 
+
+More info on [docker basics is here](https://docs.docker.com/get-started/overview/) 
+
+Some of the basic commands are 
+- docker build (This is used to build docker image locally)
+- docker run (This is used to run the docker container locally)
+- docker pull 
+- docker push
+
+Run the following command after updating the Dockerfile and moving into `packages/ml_api/`
+```bash
+docker build -t churn_api_image .
+```
+[Docker build commands documentation](https://docs.docker.com/engine/reference/commandline/build/) 
+
+Above command will build the docker image for our api and below will run the created image container locally
+
+```bash
+docker run -d --name churnapicontainer -p 8000:8000 churn_api_image
+```
+
+
+
+[Docker run commands documentation](https://docs.docker.com/engine/reference/commandline/run/) 
+
+To list all the docker container 
+
+```bash
+docker ps
+```
+
 
 Project Organization
 ------------
