@@ -187,7 +187,7 @@ git push origin main
 
 First ensure that **mlflow** is already installed in environment.
 
-We will be adding the **train_model.py** code and **production_selection.py** code to train model 
+We will be adding the **train_model.py** code and **production_model_selection.py** code to train model 
 and select the best model.
 
 *train_model.py* is already created as a part of scaffolding.we need to create the 
@@ -312,38 +312,12 @@ Below landing page will pop-up after running the above command
 
 Click on the post dropdown and test the prediction-service using demo data.
 
-# 8. Use streamlit to quickly create prototype app
+# 7.1 Critical step to update the model file
 
-Install streamlit package
+We observed that `model.joblib` file created in the **step 6** will create a problem so git pull the latest code and rerun `dvc repro`.
 
-add streamlit to requirements.txt
+This will download the `model.pkl` file from artifacts folder of mlflow to the local models folder
 
-```bash
-- streamlit
-pip install -r requirements.txt
-```
-
-create app folder and add the relevant code into it.
-
-Run below bash command to bring up the app.
-
-```bash
-streamlit run app/app.py
-```
-
-URL link will appear with ip and port in terminal, click on it and page will appear on the browser.
-
-![streamlit page](/assets/streamlit_page.png "streamlit app")
-
-# 9.
-# .... 
-We will be using **pytest** for our unit testing module, create the tests folder within the main folder and add `__init__.py`.
-
-```bash
-mkdir tests
-touch tests/__init__.py
-
-```
 
 
 Project Organization
