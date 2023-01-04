@@ -25,9 +25,9 @@ random_forest:
   max_depth: 5
   n_estimators: 30
 
-model_dir: models/model.joblib
-model_service_dir: prediction_service/model_service_dir/model.joblib
-model_webapp_dir: app/model_app_dir/model.joblib
+model_dir: models/model.pkl
+model_service_dir: packages/ml_api/churn_api/model_service_dir/model.pkl
+model_webapp_dir: packages/ml_webapp/app/model_app_dir/model.pkl
 
 model_monitor:
   target_col_name: target

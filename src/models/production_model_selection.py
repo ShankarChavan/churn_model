@@ -1,10 +1,16 @@
 import joblib
+import pickle
 import mlflow
 import argparse
 from pprint import pprint
 from train_model import read_params
 from mlflow.tracking import MlflowClient
 
+
+def write_model(model_file,path_to_write):
+    with open(path_to_write,'wb') as f:
+        pickle.dump(model_file,f)
+    
 def log_production_model(config_path):
     config = read_params(config_path)
     mlflow_config = config["mlflow_config"] 
@@ -25,7 +31,8 @@ def log_production_model(config_path):
 
         if mv["run_id"] == max_accuracy_run_id:
             current_version = mv["version"]
-            logged_model = mv["source"]
+            logged_model=client.download_artifacts(run_id=max_accuracy_run_id,path='model/model.pkl')         
+            #logged_model = mv["source"]
             pprint(mv, indent=4)
             client.transition_model_version_stage(
                 name=model_name,
@@ -40,10 +47,11 @@ def log_production_model(config_path):
                 stage="Staging"
             )        
 
-    loaded_model = mlflow.pyfunc.load_model(logged_model)
-    joblib.dump(loaded_model, model_dir)
-    joblib.dump(loaded_model, model_service_dir)
-    joblib.dump(loaded_model, model_app_dir)
+
+    with open(logged_model,'rb') as f:
+        selected_model=pickle.load(f)
+    
+    write_model(selected_model,model_dir)
     
 
 if __name__ == '__main__':

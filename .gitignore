@@ -90,3 +90,9 @@ target/
 
 # mlflow-artifacts
 artifacts/
+
+__pycache__
+
+.pytest_cache
+
+flagged
