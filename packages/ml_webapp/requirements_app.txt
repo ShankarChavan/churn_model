@@ -1,0 +1,6 @@
+pandas
+scikit-learn
+pandera
+pytest
+streamlit
+gradio

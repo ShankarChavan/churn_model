@@ -561,6 +561,92 @@ Within the dist folder we can see our file `churn_model-0.1-py3-none-any.whl`
 We can use this file to host it on pypi or Gemfury or Azure devops artifacts  
 
 
+# 8.6 Creating webapp 
+
+We can quickly create web app using two open-source tools
+
+- streamlit
+- gradio
+
+pip install both streamlit and gradio in the environment.
+
+We have already created `ml_webapp` folder within packages folder in previous step.
+
+## a. setup files and folders 
+
+Create following folders and files:
+```bash
+
+mkdir packages/ml_webapp/app
+mkdir packages/ml_webapp/app/datasets
+touch packages/ml_webapp/app/datasets/__init__.py
+mkdir packages/ml_webapp/app/model_app_dir
+
+touch packages/ml_webapp/app/app.py
+touch packages/ml_webapp/app/app_gradio.py
+
+touch packages/ml_webapp/app/config.py
+touch packages/ml_webapp/app/predict.py
+touch packages/ml_webapp/app/utils.py
+touch packages/ml_webapp/app/validation.py
+touch packages/ml_webapp/app/__init__.py
+
+mkdir packages/ml_webapp/tests
+touch packages/ml_webapp/tests/__init__.py
+touch packages/ml_webapp/tests/test_predict.py
+touch packages/ml_webapp/pyproject.toml
+
+touch packages/ml_webapp/requirements_app.txt
+
+``` 
+
+Same as in previous step of pip-package creation we will follow the steps
+
+## b. download the pickle and test data file
+- copy the model.pkl file into the model_app_dir
+- download the sample test data without target variable in the datasets folder with name *churn_test.csv*
+
+```bash
+# copy model.pkl
+cp models/model.pkl packages/ml_webapp/app/model_app_dir
+# download the file locally
+curl -L "https://drive.google.com/uc?export=download&id=1vNT232rZweCeLzjvOLSiDLj1YKjdAWHu" --output packages/ml_webapp/app/datasets/churn_test.csv
+```
+
+## c. add the code and unit-test
+
+Add the code in `app.py` and `app_gradio.py` files.Rest of the files have almost similar code as in package section.
+
+Move into the app folder within `packages/ml_webapp/app`
+
+Run below bash command to bring up the app.
+```bash
+streamlit run app/app.py
+```
+
+URL link will appear with ip and port in terminal, click on it and page will appear on the browser.
+![streamlit page](/assets/streamlit_page.png "streamlit app")
+
+Run below bash command to bring up the gradio app.
+```bash
+python app_gradio.py
+```
+URL link will appear with ip and port in terminal, click on it and page will appear on the browser.
+We can see the login page, enter user-name and password as `admin`,`admin`
+![Gradio page](/assets/gradio_login.png "Login app")
+
+After clicking on the login button we can following landing page
+![Gradio landing page](/assets/gradio_landing.png "Landing app")
+
+Gradio provides an option to share with outer world if we set the argument `share=True` in the launch function. 
+
+We can test with app and create docker file if required for the app to host it on VM
+
+## d. create the unit-test for the app
+
+Unit for the app with same we had in package section.
+
+
 
 
 Project Organization
