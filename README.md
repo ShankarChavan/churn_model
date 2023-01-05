@@ -380,6 +380,13 @@ touch packages/ml_api/tests/__init__.py
 touch packages/ml_api/pyproject.toml
 ```
 Add the code to test the post and get method of the api.
+
+Unit-test usually follows `AAA` approach
+
+- AAA: stands for assemble,action and assert.
+
+We need to assemble required input for our function,execute the action using the input and assert the result of excution with expected output. 
+
 Also update the `pyproject.toml` file for configuring pytest.
 
 ```bash
@@ -418,8 +425,6 @@ Above command will build the docker image for our api and below will run the cre
 docker run -d --name churnapicontainer -p 8000:8000 churn_api_image
 ```
 
-
-
 [Docker run commands documentation](https://docs.docker.com/engine/reference/commandline/run/) 
 
 To list all the docker container 
@@ -427,6 +432,135 @@ To list all the docker container
 ```bash
 docker ps
 ```
+
+After testing docker image we can stop and remove the docker container from the running process.
+
+```bash
+docker stop churnapicontainer
+docker rm churnapicontainer
+```
+
+Once docker file is created we can push it to **Azure container registry** using `docker push` command and create new VM hosting our api created from docker file.
+
+# 8.3 Create pip installable python package for churn-model
+
+We have already created churn_model folder within packages folder.
+
+## a. setup files and folder for package
+We will start adding the files and folders for churn_model pip package.
+
+```bash
+# files within churn_model->churn_model
+touch packages/churn_model/churn_model/__init__.py
+touch packages/churn_model/churn_model/predict.py
+touch packages/churn_model/churn_model/VERSION
+# files within churn_model
+touch packages/churn_model/pyproject.toml
+touch packages/churn_model/setup.py
+touch packages/churn_model/requirements.txt
+
+# files within churn_model->churn_model->config
+mkdir packages/churn_model/churn_model/config
+touch packages/churn_model/churn_model/config/config.py
+touch packages/churn_model/churn_model/config/utils.py
+
+# files within churn_model->churn_model->datasets
+mkdir packages/churn_model/churn_model/datasets
+touch packages/churn_model/churn_model/datasets/__init__.py
+
+# files within churn_model->churn_model->model_dir
+mkdir packages/churn_model/churn_model/model_dir
+touch packages/churn_model/churn_model/model_dir/.gitkeep
+touch packages/churn_model/churn_model/model_dir/.gitignore
+echo '/model.pkl'>>packages/churn_model/churn_model/model_dir/.gitignore
+
+# files within churn_model->churn_model->processing
+mkdir packages/churn_model/churn_model/processing
+touch packages/churn_model/churn_model/processing/__init__.py
+touch packages/churn_model/churn_model/processing/validation.py
+
+```
+
+## b. download the data and pkl files required
+- copy the model.pkl file into the model_dir
+- download the sample test data without target variable in the datasets folder with name *churn_test.csv*
+
+```bash
+# copy model.pkl
+cp models/model.pkl packages/churn_model/churn_model/model_dir
+# download the file locally
+curl -L "https://drive.google.com/uc?export=download&id=1vNT232rZweCeLzjvOLSiDLj1YKjdAWHu" --output packages/churn_model/churn_model/datasets/churn_test.csv
+```
+## c. install required packages 
+We will need to validate input schema at Dataframe level we can leverage something called as [`pandera`](https://pandera.readthedocs.io/en/stable/schema_models.html)
+This library has inbuilt integration with `pydantic` & `fastapi`.
+It also supports following Dataframe types:
+- Pandas
+- Dask
+- Modin
+- pyspark.pandas
+Let's add the pandera to requirements.txt at the root path
+```bash
+- pandera
+pip install -r requirements.txt
+```
+## d. add the required code 
+
+Add the code for all the `.py` files.
+Most of the code remains same except for validation of the input dataframe we have added the seperate class in `validation.py`  
+
+## e. update the version file
+
+Add the version as **0.1**
+
+# 8.4 Add the unit-tests for package churn-model
+
+Add the test_predict.py within `packages/churn_model/` folder.
+
+Write important unit test for your predict file following AAA aproach.
+
+Also update the `pyproject.toml` file for configuring pytest.
+
+Run the following command
+
+```bash
+python -m pytest /packages/churn_model
+```
+
+# 8.5 Create the install package with setup.py
+
+We need to update the setup.py and requirements.txt within `packages/churn_model` folder.
+
+we will use `setuptools` package setup function to pip installable **.whl**  file.
+
+Some of the important metdata of setup functione we need to enter are following:
+
+- name of package
+- description of the package
+- python_requires tells which version of python required
+- package_data tells which files we need to include apart from .py files.This is critical because we can include our .pkl file in this metdata.
+- license tells under which license we are creating this package(e.g. MIT, apache,BSD etc). 
+ 
+Update the `requirements.txt` file with all the required packages for our churn_model
+- pickle
+- pandas
+- scikit-learn
+- pandera
+
+Run the command
+```bash
+python setup.py sdist bdist_wheel 
+```
+
+We can clearly see new folders created
+
+![Wheel file created](/assets/pip_package_folder.png "build and dist folder")
+
+Within the dist folder we can see our file `churn_model-0.1-py3-none-any.whl` 
+
+We can use this file to host it on pypi or Gemfury or Azure devops artifacts  
+
+
 
 
 Project Organization
