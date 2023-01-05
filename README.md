@@ -625,26 +625,30 @@ streamlit run app/app.py
 ```
 
 URL link will appear with ip and port in terminal, click on it and page will appear on the browser.
+
 ![streamlit page](/assets/streamlit_page.png "streamlit app")
 
 Run below bash command to bring up the gradio app.
 ```bash
 python app_gradio.py
 ```
-URL link will appear with ip and port in terminal, click on it and page will appear on the browser.
-We can see the login page, enter user-name and password as `admin`,`admin`
+URL link will appear with ip and port in terminal, click on it and login page will appear on the browser.
+
+We can see the login page and enter the user-name and password as `admin`,`admin`
+
 ![Gradio page](/assets/gradio_login.png "Login app")
 
-After clicking on the login button we can following landing page
+After clicking on the login button we can see following landing page
+
 ![Gradio landing page](/assets/gradio_landing.png "Landing app")
 
-Gradio provides an option to share with outer world if we set the argument `share=True` in the launch function. 
+Gradio provides an option to share app with outer world if we set the argument `share=True` in the launch function. 
 
-We can test with app and create docker file if required for the app to host it on VM
+We can test prototype-app for our model and create docker file if required for the app to hosted on VM
 
 ## d. create the unit-test for the app
 
-Unit for the app with same we had in package section.
+Unit-test for the app is same as we had in package section.
 
 
 
