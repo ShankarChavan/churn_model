@@ -20,4 +20,6 @@ pydantic
 fastapi
 uvicorn
 streamlit
+gradio
+pandera
 python-dotenv>=0.5.1
